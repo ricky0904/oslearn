@@ -18,7 +18,7 @@ hang:
     jmp hang
 
 msg db 'Hello World', 13, 10, 0 ; 13 carriage return \r (return to the beginning of current line, 10 line feed \n move to next line but not the beginning. 0 null.   
+	
     times 510-($-$$) db 0
-    
     db 0x55
     db 0xAA

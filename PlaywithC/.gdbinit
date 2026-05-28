@@ -9,6 +9,7 @@ layout src
 layout reg
 
 hb *_start
+break main
 continue
 
 

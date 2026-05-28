@@ -1,6 +1,6 @@
 global _start:
 extern main:
-
+bits 16
 
 _start:
     xor ax, ax ; clear ax register
@@ -40,3 +40,4 @@ times 510-($-$$) db 0
 
 db 0x55
 db 0xAA
+section .note.GNU-stack noalloc noexec nowrite progbits

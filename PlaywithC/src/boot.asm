@@ -1,5 +1,5 @@
 global _start:
-extern main:
+;extern main:
 bits 16
 
 _start:
@@ -27,8 +27,8 @@ _start:
     jc hang
 
 
-
-    call main
+	jmp 0x7E00
+    ;call main
 
 
 

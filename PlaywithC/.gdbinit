@@ -8,8 +8,11 @@ set disassembly-flavor intel
 layout src
 layout reg
 
+
+#hardware breakpoint
 hb *_start
-break main
+hb *a20test 
+# break main
 continue
 
 

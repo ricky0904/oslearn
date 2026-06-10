@@ -37,7 +37,7 @@ a20test:
 	mov byte [es:di], 0x00	
 	mov byte [ds:si], 0xFF
 
-	cmp byte [es:di], 0xFF
+	cmp byte [es:di], 0xFF  ; compare the data in es:di and ds:si, if they are the same means A20 is not active
 
 	pop ax
 	mov byte [ds:si], al
@@ -50,7 +50,7 @@ a20test:
 
 	je a20testexit
 
-	mov ax, 1
+	mov ax, 1      ; if they are not same je will not happen, ax loaded with 1
 
 
 

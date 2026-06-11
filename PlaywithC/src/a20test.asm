@@ -6,6 +6,7 @@ bits 16
 ;	mov ax, 0x2401
 ;	int 0x15
 ;	pop ax
+extern longjmp
 
 a20test:
 
@@ -53,6 +54,7 @@ a20test:
 	mov ax, 1      ; if they are not same je will not happen, ax loaded with 1
 
 
+    jmp longjmp
 
 a20testexit:
 	pop es
@@ -60,7 +62,7 @@ a20testexit:
 	pop	di
 	pop si
 	popf
-	ret
+	ret      ; clear the stack
 	;mov al, [ds:si]
 	;mov byte [.BufferBelowMB], al
 	;mov al, [es:di]

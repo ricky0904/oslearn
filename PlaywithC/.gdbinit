@@ -12,6 +12,7 @@ layout reg
 #hardware breakpoint
 hb *_start
 hb *a20test 
+hb *longjmp
 # break main
 continue
 

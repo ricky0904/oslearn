@@ -13,6 +13,7 @@ layout reg
 hb *_start
 hb *a20test 
 hb *longjmp
+hb complete_flush
 # break main
 continue
 

@@ -7,7 +7,7 @@ longjmp:
 
 
 ;_start:
-    xor ax ; set ax to zero
+    xor ax, ax ; set ax to zero
     cli                         ; 1. Disable interrupts before changing CPU modes
 
     lgdt [gdt_descriptor]       ; 2. Load the GDT pointer into the GDTR register

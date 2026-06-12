@@ -1,5 +1,6 @@
 bits 16
 global longjmp ; expose this entry to other assemblyfiles
+extern complete_flush
 longjmp:
 ;    mov al, 2
 
@@ -7,39 +8,19 @@ longjmp:
 
 
 ;_start:
-    xor ax ; set ax to zero
-    cli                         ; 1. Disable interrupts before changing CPU modes
+;    xor ax,ax ; set ax to zero
+;    cli                         ; 1. Disable interrupts before changing CPU modes
 
     lgdt [gdt_descriptor]       ; 2. Load the GDT pointer into the GDTR register
+    mov eax, cr0   ; cr0 protected mode must be set, otherwise the code wont be executed properly. 
+    or eax, 1    ; bit 1 = 1, first bit: protected mode enable
+    mov cr0, eax
+
 
     ; 3. Execute the long jump. 
     ; 0x08 is the offset to our code segment descriptor in the GDT (8 bytes from start)
     jmp 0x08:complete_flush
-
-bits 32                         ; Tell NASM the following code is 32-bit protected mode
-complete_flush:
-    ; 4. Update all data segment registers to point to our data segment selector (0x10)
-    mov ax, 0x10                
-    mov ds, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-    mov ss, ax
-
-    ; 5. Update the stack pointer to a safe memory area
-    mov esp, 0x90000            
-
-    ; Your protected mode code goes here
-    jmp $                       ; Infinite loop to halt execution Safely
-
-
-
-
-
-
-
-
-
+    ;mov ax, 0x02
 
 
 

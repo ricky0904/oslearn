@@ -11,6 +11,10 @@ complete_flush:
 	mov gs, ax
 	mov ss, ax
 
+	call checkCPUID
+	mov eax, 02
+
+
 
 checkCPUID:
 	pushfd ; push flag register
@@ -31,7 +35,6 @@ checkCPUID:
 
 	xor eax, ecx;
 	jnz .supported
-	mov eax, 0x2
 
 	.notsupported:
 		mov ax, 0

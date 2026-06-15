@@ -12,7 +12,8 @@ layout reg
 #hb *_start
 #hb *a20test 
 #hb *set_paging
-hb *complete_flush
+#hb *complete_flush
+hb *enable_PAE
 # break main
 continue
 

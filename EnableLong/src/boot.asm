@@ -11,7 +11,7 @@ _start:
     ;reading sector from hard drive
 
     mov ah, 0x02;  second function read section
-    mov al, 1;  read two sectors
+    mov al, 2;  read 4 sectors
     mov ch, 0; cylinder number 0
     mov cl, 2; index of sector being read - 2
     mov dh, 0; head number 0

@@ -11,7 +11,8 @@ layout reg
 #hardware breakpoint
 #hb *_start
 #hb *a20test 
-hb *longjmp
+#hb *set_paging
+hb *complete_flush
 # break main
 continue
 

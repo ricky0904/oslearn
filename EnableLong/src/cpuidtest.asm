@@ -1,10 +1,12 @@
 bits 32
 
 global complete_flush:
+extern set_paging:
 EFLAGS_ID equ 1 << 21
 CPUID_EXTENSIONS equ 0x80000000; 32 bit value, EAX Maximum input value for entended CPUID information 
 CPUID_FEATURES equ 0x80000001; Extended processor signature and feature bits
 CPUID_EDX_EXT_FEAT_LM equ 1<<29; bit 19, Intel A64 Enable
+CR0_PAGING equ 1<<31
 
 
 complete_flush:
@@ -14,6 +16,8 @@ complete_flush:
 	mov fs, ax
 	mov gs, ax
 	mov ss, ax
+	
+	mov esp, 0x90000  ; set stack base position
 
 	call checkCPUID
 	
@@ -27,10 +31,21 @@ complete_flush:
 	jz .NoLongMode
 		
 	
-	mov eax, 02
+	call disablePaging
+		
+	
+	jmp set_paging
+
 	.NoLongMode:
 	jmp $
 
+disablePaging:
+; set bit 31 in cr0 to zero 
+	mov eax, cr0 
+	and eax, ~CR0_PAGING
+	mov cr0, eax 
+	xor eax, eax
+	ret
 
 
 checkCPUID:

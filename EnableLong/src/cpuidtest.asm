@@ -2,6 +2,10 @@ bits 32
 
 global complete_flush:
 EFLAGS_ID equ 1 << 21
+CPUID_EXTENSIONS equ 0x80000000; 32 bit value, EAX Maximum input value for entended CPUID information 
+CPUID_FEATURES equ 0x80000001; Extended processor signature and feature bits
+CPUID_EDX_EXT_FEAT_LM equ 1<<29; bit 19, Intel A64 Enable
+
 
 complete_flush:
 	mov ax, 0x10
@@ -12,7 +16,20 @@ complete_flush:
 	mov ss, ax
 
 	call checkCPUID
+	
+	mov eax, CPUID_EXTENSIONS
+	cpuid
+	cmp eax, CPUID_FEATURES 
+	jb .NoLongMode  ; No long mode is a local lable, move it outside complete_flush will cause assembly error
+	mov eax, CPUID_FEATURES
+	cpuid
+	test edx, CPUID_EDX_EXT_FEAT_LM 
+	jz .NoLongMode
+		
+	
 	mov eax, 02
+	.NoLongMode:
+	jmp $
 
 
 
@@ -42,3 +59,4 @@ checkCPUID:
 	.supported:
 		mov ax, 1
 		ret
+

@@ -1,8 +1,7 @@
-target remote localhost:1234
 file ./build/debug_symbols.elf
+set architecture i386:x86-64
+target remote localhost:1234
 
-
-set architecture i386
 set disassembly-flavor intel
 
 layout asm

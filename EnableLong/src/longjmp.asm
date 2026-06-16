@@ -1,7 +1,7 @@
 bits 16
 global longjmp ; expose this entry to other assemblyfiles
 extern complete_flush
-global gdt_descriptor
+; global gdt_descriptor
 longjmp:
 ;    mov al, 2
 

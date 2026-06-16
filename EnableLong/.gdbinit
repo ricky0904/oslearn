@@ -13,8 +13,10 @@ layout reg
 #hb *a20test 
 #hb *set_paging
 #hb *complete_flush
-hb *longjmp
-hb *enable_PAE
+#hb *longjmp
+hb *load_gdt64
+hb *Realm64
+focus reg
 # break main
 continue
 

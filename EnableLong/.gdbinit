@@ -13,6 +13,7 @@ layout reg
 #hb *a20test 
 #hb *set_paging
 #hb *complete_flush
+hb *longjmp
 hb *enable_PAE
 # break main
 continue

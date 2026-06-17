@@ -1,19 +1,19 @@
-
+NFLAGS = -f elf32 -g -F dwarf
 image.bin: ./build/debug_symbols.elf 
 	objcopy -O binary ./build/debug_symbols.elf image.bin
 
 ./build/boot_elf32.o: ./src/boot.asm 
-	nasm -f elf32 -g -F dwarf ./src/boot.asm -o ./build/boot_elf32.o # this gives elf64 output 
+	nasm $(NFLAGS) ./src/boot.asm -o ./build/boot_elf32.o # this gives elf64 output 
 ./build/a20test_elf32.o: ./src/a20test.asm 
-	nasm -f elf32 -g -F dwarf ./src/a20test.asm -o ./build/a20test_elf32.o # this gives elf64 output 
+	nasm $(NFLAGS) ./src/a20test.asm -o ./build/a20test_elf32.o # this gives elf64 output 
 ./build/longjmp_elf32.o: ./src/longjmp.asm 
-	nasm -f elf32 -g -F dwarf ./src/longjmp.asm -o ./build/longjmp_elf32.o # this gives elf64 output 
+	nasm $(NFLAGS) ./src/longjmp.asm -o ./build/longjmp_elf32.o # this gives elf64 output 
 ./build/cpuidtest_elf32.o: ./src/cpuidtest.asm 
-	nasm -f elf32 -g -F dwarf ./src/cpuidtest.asm -o ./build/cpuidtest_elf32.o # this gives elf64 output 
+	nasm $(NFLAGS) ./src/cpuidtest.asm -o ./build/cpuidtest_elf32.o # this gives elf64 output 
 ./build/setpaging_elf32.o: ./src/setpaging.asm 
-	nasm -f elf32 -g -F dwarf ./src/setpaging.asm -o ./build/setpaging_elf32.o # this gives elf64 output 
+	nasm $(NFLAGS) ./src/setpaging.asm -o ./build/setpaging_elf32.o # this gives elf64 output 
 ./build/longstart_elf32.o: ./src/longstart.asm 
-	nasm -f elf32 -g -F dwarf ./src/longstart.asm -o ./build/longstart_elf32.o # this gives elf64 output 
+	nasm $(NFLAGS) ./src/longstart.asm -o ./build/longstart_elf32.o # this gives elf64 output 
 
 
 ./build/debug_symbols.elf: ./build/boot_elf32.o ./build/a20test_elf32.o ./build/longjmp_elf32.o ./build/cpuidtest_elf32.o ./build/setpaging_elf32.o ./build/longstart_elf32.o

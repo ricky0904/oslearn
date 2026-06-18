@@ -1,24 +1,29 @@
-bits 32
-global load_gdt64
-; extern gdt_descriptor
-; 64bit gdt fields
-; Access bits
-PRESENT        equ 1 << 7
-NOT_SYS        equ 1 << 4
-EXEC           equ 1 << 3
-DC             equ 1 << 2
-RW             equ 1 << 1
-ACCESSED       equ 1 << 0
-
-; Flags bits
-GRAN_4K       equ 1 << 7
-SZ_32         equ 1 << 6
-LONG_MODE     equ 1 << 5
+bits 16
+global longjmp ; expose this entry to other assemblyfiles
+extern complete_flush
+; global gdt_descriptor
+longjmp:
+;    mov al, 2
 
 
-load_gdt64:
-	lgdt [gdt_descriptor]
-	jmp 0x08:Realm64
+
+
+;_start:
+;    xor ax,ax ; set ax to zero
+;    cli                         ; 1. Disable interrupts before changing CPU modes
+
+    lgdt [gdt_descriptor]       ; 2. Load the GDT pointer into the GDTR register
+    mov eax, cr0   ; cr0 protected mode must be set, otherwise the code wont be executed properly. 
+    or eax, 1    ; bit 1 = 1, first bit: protected mode enable
+    mov cr0, eax
+
+
+    ; 3. Execute the long jump. 
+    ; 0x08 is the offset to our code segment descriptor in the GDT (8 bytes from start)
+    jmp 0x08:complete_flush
+    ;mov ax, 0x02
+
+
 
 ; ==============================================================================
 ; GLOBAL DESCRIPTOR TABLE (GDT) DEFINITION
@@ -48,12 +53,12 @@ gdt_start:
     ; 1: R/W bit: for code segment: 0:= read prohibited, 1:= read allowed (for data segment, 0:=write prohibited, 1:=write allowed).
     ; 0: Access bit: this bits flag by CPU as soon as any segment register refer to the segment. Use to identify page fault
 
-    db 0xAF                     ; Flags (4 bits) + Limit (bits 16-19)
-    ; 0xCF = 10101111
+    db 0xCF                     ; Flags (4 bits) + Limit (bits 16-19)
+    ; 0xCF = 11001111
     ; msb to lsb
     ; 1: Granularity bit: 1:= 4KB page size, 0:=1 Byte page size
-    ; 0: Size flag: 1:= 32 bit protectd mode, 0:= 16 bit protected mode. 
-    ; 1: Long mode flag: 1:= 64 bit protected code segment, if this bit is set, the size flag (one bit to its left) should always be 0. 0:= any other type
+    ; 1: Size flag: 1:= 32 bit protectd mode, 0:= 16 bit protected mode. 
+    ; 0: Long mode flag: 1:= 64 bit protected code segment, if this bit is set, the size flag (one bit to its left) should always be 0. 0:= any other type
     ; 0: reserved
     ; 1111: MSB of limit section.
     db 0x00                     ; Base (bits 24-31)
@@ -74,21 +79,3 @@ gdt_end:
 gdt_descriptor:
     dw gdt_end - gdt_start - 1  ; Size of GDT minus 1 byte, because this is an offset value from the beginning of GDT
     dd gdt_start                ; Linear address where the GDT starts
-
-
-bits 64			
-Realm64:
-;	mov rax, 0x1122334455667788
-;	mov r8, 0x1122334455667788
-;	mov rax, 0x0000000000000001
-	mov rax, 0x1
-;	cpuid
-;	and edx, 1 << 9
-;	mov rax, 0x1
-;	add r8, 5
-;	mov r8d, 0x0776
-	;mov rax, 0xB8000
-	;mov WORD [rax], r8d
-;	jmp $
-;
-

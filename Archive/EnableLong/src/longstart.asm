@@ -1,7 +1,5 @@
 bits 32
 global load_gdt64
-extern entry
-
 ; extern gdt_descriptor
 ; 64bit gdt fields
 ; Access bits
@@ -80,13 +78,13 @@ gdt_descriptor:
 
 bits 64			
 Realm64:
-	mov rax, 0x1122334455667788
-	mov r8, 0x1122334455667788
-	mov rax, 0x0
-	cpuid 
-
+;	mov rax, 0x1122334455667788
+;	mov r8, 0x1122334455667788
+;	mov rax, 0x0000000000000001
 	mov rax, 0x1
-;	jmp entry
+	cpuid
+	and edx, 1 << 9
+	mov rax, 0x1
 ;	add r8, 5
 ;	mov r8d, 0x0776
 	;mov rax, 0xB8000

@@ -5,7 +5,7 @@ NFLAGS64 = -f elf64 -g -F dwarf
 	objcopy -O binary ./build/debug_symbols64.elf ./build/entry64.bin
 
 ./build/debug_symbols64.elf: ./build/entry64.o
-	ld -m elf_x86_64 ./build/entry64.o -o ./build/debug_symbols64.elf # set function starting point at 0x7c00
+	ld -m elf_x86_64 -Ttext=0x7c00 ./build/entry64.o -o ./build/debug_symbols64.elf # set function starting point at 0x7c00
 
 ./build/entry64.o: ./src/entry64.asm ./build/bootto64.bin
 	nasm $(NFLAGS64) ./src/entry64.asm -o ./build/entry64.o # this gives elf64 output 

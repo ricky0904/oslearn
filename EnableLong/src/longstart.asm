@@ -82,6 +82,7 @@ Realm64:
 ;	mov r8, 0x1122334455667788
 ;	mov rax, 0x0000000000000001
 	mov rax, 0x1
+;	hlt
 ;	cpuid
 ;	and edx, 1 << 9
 ;	mov rax, 0x1

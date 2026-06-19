@@ -1,4 +1,8 @@
-file ./build/debug_symbols.elf
+file ./build/debug_symbols64.elf
+#add-inferior
+#inferior 2
+#file ./build/debug_symbols64.elf
+#info inferiors
 set architecture i386:x86-64
 target remote localhost:1234
 
@@ -14,8 +18,9 @@ layout reg
 #hb *set_paging
 #hb *complete_flush
 #hb *longjmp
-hb *load_gdt64
-hb *Realm64
+#hb *load_gdt64
+hb *entry64
+#hb *entry64
 focus reg
 # break main
 continue

@@ -6,6 +6,9 @@ _start:
 entry64:
 	align 8
 	mov ax, 0x10
-	mov ds, ax
-	mov es, ax
-	mov ss, ax  ; flush the registers
+	hlt
+;	align 8
+;	mov ax, 0x10
+;	mov ds, ax
+;	mov es, ax
+;	mov ss, ax  ; flush the registers

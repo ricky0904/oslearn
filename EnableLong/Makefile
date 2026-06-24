@@ -31,7 +31,7 @@ NFLAGS64 = -f elf64 -g -F dwarf
 
 
 ./build/debug_symbols.elf: ./build/boot_elf32.o ./build/a20test_elf32.o ./build/longjmp_elf32.o ./build/cpuidtest_elf32.o ./build/setpaging_elf32.o ./build/longstart_elf32.o
-	ld -m elf_i386 -Ttext=0x7c00 ./build/boot_elf32.o ./build/a20test_elf32.o ./build/longjmp_elf32.o ./build/cpuidtest_elf32.o ./build/setpaging_elf32.o ./build/longstart_elf32.o -o ./build/debug_symbols.elf # set function starting point at 0x7c00
+	ld -m elf_i386 -Ttext=0x7c00 $^ -o $@ # set function starting point at 0x7c00
 
 
 

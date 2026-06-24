@@ -8,7 +8,7 @@ target remote localhost:1234
 
 set disassembly-flavor intel
 
-layout asm
+layout src 
 layout reg
 
 
@@ -20,6 +20,7 @@ layout reg
 #hb *longjmp
 #hb *load_gdt64
 hb *entry64
+hb *cstart
 #hb *entry64
 focus reg
 # break main

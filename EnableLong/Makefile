@@ -1,17 +1,21 @@
 NFLAGS = -f elf32 -g -F dwarf
+CFLAGS = -m64 -gdwarf -O0 -c
 NFLAGS64 = -f elf64 -g -F dwarf
 
 ./build/entry64.bin: ./build/debug_symbols64.elf 
 	objcopy -O binary ./build/debug_symbols64.elf ./build/entry64.bin
 
-./build/debug_symbols64.elf: ./build/entry64.o
-	ld -m elf_x86_64 -Ttext=0x7c00 ./build/entry64.o -o ./build/debug_symbols64.elf # set function starting point at 0x7c00
+./build/debug_symbols64.elf: ./build/entry64.o ./build/cstart.o
+	ld -m elf_x86_64 -Ttext=0x7c00 ./build/entry64.o ./build/cstart.o -o ./build/debug_symbols64.elf # set function starting point at 0x7c00
+
 
 ./build/entry64.o: ./src/entry64.asm ./build/bootto64.bin
 	nasm $(NFLAGS64) ./src/entry64.asm -o ./build/entry64.o # this gives elf64 output 
 ./build/bootto64.bin: ./build/debug_symbols.elf 
 	objcopy -O binary ./build/debug_symbols.elf ./build/bootto64.bin
 
+./build/cstart.o: ./src/cstart.c
+	gcc $(CFLAGS) ./src/cstart.c -o ./build/cstart.o
 ./build/boot_elf32.o: ./src/boot.asm 
 	nasm $(NFLAGS) ./src/boot.asm -o ./build/boot_elf32.o # this gives elf64 output 
 ./build/a20test_elf32.o: ./src/a20test.asm 

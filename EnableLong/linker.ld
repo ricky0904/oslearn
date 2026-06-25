@@ -13,8 +13,12 @@ SECTIONS
 	.bss : { ./build/entry64.o ./build/cstart.o(.bss) } > RAM
 	.rodata : { ./build/entry64.o ./build/cstart.o(.rodata) } > FLASH
 	.data.rel.local : { ./build/entry64.o ./build/cstart.o(.data.rel.local) } > RAM
-	.eh_frame : {
+	/DISCARD/ :
+	{
+		./build/cstart.o(.eh_frame) /*this section is for unwinding the function calls when execption is thrown, this is for c++ not c*/
+	}
+/*	.eh_frame : {
 		./build/cstart.o(.eh_frame);
-		}
+		}*/
 }
 

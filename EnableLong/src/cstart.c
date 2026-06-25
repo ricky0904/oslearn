@@ -1,3 +1,5 @@
+
+unsigned char* x="abc";
 int cstart()
 
 {

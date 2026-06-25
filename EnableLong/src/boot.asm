@@ -11,9 +11,9 @@ _start:
     ;reading sector from hard drive
 
     mov ah, 0x02;  second function read section
-    mov al, 1;  read 4 sectors
+    mov al, 4;  read 4 sector
     mov ch, 0; cylinder number 0
-    mov cl, 2; index of sector being read - 2
+    mov cl, 2; index of sector being read 2,  sector index start from 1.  First sector is read to 0x7c00 without programming. 
     mov dh, 0; head number 0
     mov dl, 0x80; drive number
 

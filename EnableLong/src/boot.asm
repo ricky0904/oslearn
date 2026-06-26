@@ -11,7 +11,10 @@ _start:
     ;reading sector from hard drive
 
     mov ah, 0x02;  second function read section
-    mov al, 4;  read 4 sector
+    mov al, 15;  read 15 sector, there are total 15 + 1 sector being read.  The one extra sector is boot sector. 
+	; total bytes of 16 sectors = 16 * 512 = 8192 = 0x2000
+	; address range is 0x7c00 to 0x9c00
+	
     mov ch, 0; cylinder number 0
     mov cl, 2; index of sector being read 2,  sector index start from 1.  First sector is read to 0x7c00 without programming. 
     mov dh, 0; head number 0

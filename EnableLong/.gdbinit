@@ -21,7 +21,8 @@ layout reg
 #hb *load_gdt64
 #hb *entry64
 hb *cstart
-hb *gdbBreak
+hb *verifyChecksum
+hb *strcmp
 #hb *entry64
 focus reg
 # break main

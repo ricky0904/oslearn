@@ -1,18 +1,36 @@
+#include <string.h>
 #define RSDP_SIGNATURE "RSD PTR "
+
 
 
 
 unsigned char* RSDPSearchStart = (unsigned char*)0xE0000;
 unsigned char* RSDPSearchEnd = (unsigned char*)0xFFFFF;
 
-void gdbBreak()
+int verifyChecksum(unsigned char* InputPtr)
 {
-	int i = 0;
+	unsigned char sum = 0;
+	for (unsigned char* ptr=InputPtr; ptr <= InputPtr+19; ptr = ptr + 1) 
+	{
+		sum = sum + *ptr;
+	}
+	if (sum == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+
 } 
 
 
 int RSDPSignatureCmp(unsigned char* InputPtr)
 {
+	int valid = 0;
+	unsigned char b[] = RSDP_SIGNATURE; 
+	 
 	if (*InputPtr == 'R' && 
 		*(InputPtr+1) == 'S' &&
 		*(InputPtr+2) == 'D' &&
@@ -22,11 +40,14 @@ int RSDPSignatureCmp(unsigned char* InputPtr)
 		*(InputPtr+6) == 'R' &&
 		*(InputPtr+7) == ' ')
 	{
-		gdbBreak();
-		return 1;
+		valid = verifyChecksum(InputPtr);
+		valid = strcmp(InputPtr, b);
+		return 0;
 	}
-	return 0;
-	
+	else
+	{
+		return 1;	
+	}
 }
 
 

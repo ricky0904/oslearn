@@ -1,5 +1,5 @@
 NFLAGS = -f elf32 -g -F dwarf
-CFLAGS = -m64 -gdwarf -O0 -c
+CFLAGS = -m64 -gdwarf -O0 -static -c
 NFLAGS64 = -f elf64 -g -F dwarf
 
 ./build/entry64.bin: ./build/debug_symbols64.elf 

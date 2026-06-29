@@ -19,8 +19,9 @@ layout reg
 #hb *complete_flush
 #hb *longjmp
 #hb *load_gdt64
-hb *entry64
+#hb *entry64
 hb *cstart
+hb *gdbBreak
 #hb *entry64
 focus reg
 # break main

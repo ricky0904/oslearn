@@ -5,6 +5,11 @@
 unsigned char* RSDPSearchStart = (unsigned char*)0xE0000;
 unsigned char* RSDPSearchEnd = (unsigned char*)0xFFFFF;
 
+void gdbBreak()
+{
+	int i = 0;
+} 
+
 
 int RSDPSignatureCmp(unsigned char* InputPtr)
 {
@@ -17,6 +22,7 @@ int RSDPSignatureCmp(unsigned char* InputPtr)
 		*(InputPtr+6) == 'R' &&
 		*(InputPtr+7) == ' ')
 	{
+		gdbBreak();
 		return 1;
 	}
 	return 0;
@@ -35,6 +41,9 @@ int cstart()
 	//printchar();
 	//long a = 2;
 	int RSDPfound = 0;	
-	for (unsigned char* ptr = RSDPSearchStart; ptr <= RSDPSearchEnd  
+	for (unsigned char* ptr = RSDPSearchStart; ptr <= RSDPSearchEnd - 7; ptr = ptr + 1)
+	{
+		RSDPSignatureCmp(ptr);
+	} 
 	return 0;
 }

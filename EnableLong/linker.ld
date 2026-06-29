@@ -1,8 +1,8 @@
 OUTPUT_FORMAT("elf64-x86-64")
 MEMORY
 {
-	FLASH (rx): ORIGIN = 0x7c00, LENGTH = 4K
-	RAM (rw): ORIGIN = 0x8c00, LENGTH = 4K
+	FLASH (rx): ORIGIN = 0x7c00, LENGTH = 4K  /* where code section is*/ 
+	RAM (rw): ORIGIN = 0x8c00, LENGTH = 4K /* where data section is */ 
 }
 SECTIONS
 

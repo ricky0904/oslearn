@@ -4,6 +4,7 @@ NFLAGS64 = -f elf64 -g -F dwarf
 
 ./build/entry64.bin: ./build/debug_symbols64.elf 
 	objcopy -O binary ./build/debug_symbols64.elf ./build/entry64.bin
+	truncate --size 8K ./build/entry64.bin # this should match the sector read size of interrupt 0x02
 
 #./build/debug_symbols64.elf: ./build/entry64.o ./build/cstart.o
 #	ld -m elf_x86_64 -Ttext=0x7c00 ./build/entry64.o ./build/cstart.o -o ./build/debug_symbols64.elf # set function starting point at 0x7c00

@@ -1,0 +1,20 @@
+A: Parse ACPI table
+1. Locate RSDP and parsing it. (Root System Description Pointer)
+2. Looking for XSDT/RSDT and look for MADT (Multiple APIC Description Table)
+3. Parse Processor Local APIC in MADT and extract the APIC IDs of all available secondary cores.
+
+B: Prepare trempoline code
+The second core access the first 1 MB of memory. 
+1. Identity map the first 1 MB memroy. 
+2. Copy code to 0x8000 (for example)
+3. Boot from 16 bit to 64 bit protected mode. (Set GDT, set protected mode bits etc.)
+
+
+C: Send IPI protocl sequence
+3 step protocol, INIT IPI (LAPIC ICR 0x4500) -> sleep -> Startup (SIPI 1 0x46xxx, xx is the 8 bit page vector, 0x08 for 0x8000) -> sleep -> Startup (SIPI 2 aif api fail
+
+D: Sychronizing multiple core
+Because they will run the same trempoline code so prevention of using same stack is necessary. 
+
+
+
